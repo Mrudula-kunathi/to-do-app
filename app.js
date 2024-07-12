@@ -1,68 +1,35 @@
-// Define an array to store activities
-let listOfActivities = [];
-
-// Get references to DOM elements
-const input = document.getElementById("input");
-const todolist = document.getElementById("todolist");
-const button = document.getElementById("button");
-
-// Assign event listener to button click
-button.addEventListener("click", handleClick);
-
-// Function to handle button click
-function handleClick() {
-  // Push the input value to the array
-  listOfActivities.push(input.value.trim());
-  
-  // Clear input field
+var activitiesList = [];
+var input = document.getElementById("input");
+var todolist = document.getElementById("todolist");
+document.getElementById("button").onclick = click;
+function click() {
+  activitiesList.push(input.value);
+  console.log(activitiesList);
   input.value = "";
-  
-  // Update the displayed list
-  showList();
-}
+  displayLi();
+  }
+function displayLi() {
 
-// Function to display the list
-function showList() {
-  // Clear the current list
-  todolist.innerHTML = "";
-  
-  // Loop through the array and create list items
-  listOfActivities.forEach((activity, index) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = activity;
-    
-    // Create "Edit" link
-    const editLink = document.createElement("a");
-    editLink.textContent = "Edit";
-    editLink.href = "#";
-    editLink.onclick = () => editItem(index);
-    
-    // Create "Delete" link
-    const deleteLink = document.createElement("a");
-    deleteLink.textContent = " ❌";
-    deleteLink.href = "#";
-    deleteLink.onclick = () => deleteItem(index);
-    
-    // Append links to list item
-    listItem.appendChild(editLink);
-    listItem.appendChild(deleteLink);
-    
-    // Append list item to the list
-    todolist.appendChild(listItem);
+  todolist.innerHTML = " ";
+    activitiesList.forEach(function (n, i) {
+    todolist.innerHTML +=
+      "<li>" +
+      n +
+      "<a onclick='modifyItem(" +
+      i +
+      ")'>Edit</a>" +
+      "<a onclick='removeItem(" +
+      i +
+      ")'>&times | </a></li>";
   });
 }
-
-// Function to delete an item
-function deleteItem(index) {
-  listOfActivities.splice(index, 1);
-  showList();
+function removeItem(i) {
+  activitiesList.splice(i, 1);
+  displayLi();
 }
 
-// Function to edit an item
-function editItem(index) {
-  const newValue = prompt("Please insert your new value", listOfActivities[index]);
-  if (newValue !== null) {
-    listOfActivities[index] = newValue.trim();
-    showList();
-  }
+function modifyItem(i) {
+  var newValue = prompt("new value");
+  activitiesList.splice(i, 1, newValue);
+  displayLi();
 }
