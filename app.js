@@ -1,35 +1,38 @@
-var activitiesList = [];
-var input = document.getElementById("input");
-var todolist = document.getElementById("todolist");
-document.getElementById("button").onclick = click;
-function click() {
-  activitiesList.push(input.value);
-  console.log(activitiesList);
-  input.value = "";
-  displayLi();
-  }
-function displayLi() {
+var taskArray = [];
+var userInput = document.getElementById("input");
+var taskListElement = document.getElementById("todolist");
 
-  todolist.innerHTML = " ";
-    activitiesList.forEach(function (n, i) {
-    todolist.innerHTML +=
+document.getElementById("button").onclick = click;
+
+function click() {
+  taskArray.push(userInput.value);
+  console.log(taskArray);
+  userInput.value = "";
+  displayLi();
+}
+
+function displayLi() {
+  taskListElement.innerHTML = "";
+  taskArray.forEach(function (task, index) {
+    taskListElement.innerHTML +=
       "<li>" +
-      n +
+      task +
       "<a onclick='modifyItem(" +
-      i +
+      index +
       ")'>Edit</a>" +
       "<a onclick='removeItem(" +
-      i +
+      index +
       ")'>&times | </a></li>";
   });
 }
-function removeItem(i) {
-  activitiesList.splice(i, 1);
+
+function removeItem(index) {
+  taskArray.splice(index, 1);
   displayLi();
 }
 
-function modifyItem(i) {
-  var newValue = prompt("new value");
-  activitiesList.splice(i, 1, newValue);
+function modifyItem(index) {
+  var newTaskValue = prompt("new value");
+  taskArray.splice(index, 1, newTaskValue);
   displayLi();
 }
